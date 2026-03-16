@@ -150,7 +150,7 @@ export default function CalendarCell({
           <p
             className={cn(
               "font-myanmar font-semibold leading-tight text-stone-700",
-              compact ? "text-[9px]" : "text-[10px]",
+              compact ? "text-[8px] truncate" : "text-[10px]",
             )}
           >
             {myanmarDate.monthMy} {myanmarDate.dayPhaseMy}
@@ -160,7 +160,7 @@ export default function CalendarCell({
             className={cn(
               "font-myanmar",
               compact
-                ? "h-3 truncate text-[9px] font-bold"
+                ? "h-3 truncate text-[8px] font-bold"
                 : "h-3 text-[10px] font-bold",
               holiday ? "text-rose-600" : "text-transparent",
             )}

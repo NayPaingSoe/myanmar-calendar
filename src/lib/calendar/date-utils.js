@@ -56,23 +56,6 @@ function getMmDateTimeForWesternDate(date) {
   return new ceMmDateTime(jd, 0, 1);
 }
 
-export function buildMonthCells(year, month) {
-  const firstWeekday = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-  const cells = Array(firstWeekday).fill(null);
-
-  for (let day = 1; day <= daysInMonth; day += 1) {
-    cells.push(day);
-  }
-
-  while (cells.length % 7 !== 0) {
-    cells.push(null);
-  }
-
-  return cells;
-}
-
 export function buildExpandedMonthCells(year, month) {
   const firstWeekday = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();

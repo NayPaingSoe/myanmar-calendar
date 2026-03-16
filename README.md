@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Myanmar Calendar (Next.js)
 
-## Getting Started
+A Myanmar-focused calendar app built with Next.js App Router, Tailwind CSS, and shadcn/base-ui primitives.
 
-First, run the development server:
+## Features
+
+- 4-month grid view (calendar cards)
+- Single month detailed view
+- Myanmar date data in each day cell
+- Myanmar public holiday indicator + hover tooltip
+- Date detail modal on selected day
+
+## Project Architecture
+
+```text
+src/
+  app/
+    layout.js                # App shell
+    page.js                  # Main state + view switching (Month / 4-Month)
+    globals.css              # Global styles and theme tokens
+
+  components/
+    calendar/
+      HeaderBar.jsx          # Top header
+      CalendarToolbar.jsx    # Navigation + year + mode toggles
+      FourMonthGrid.jsx      # 4-month layout using compact month views
+      DetailedMonthView.jsx  # Month grid cells + selection + tooltip + modal trigger
+      DateDetailModal.jsx    # Selected date detail dialog
+
+    ui/
+      dialog.jsx             # Dialog primitives
+      button.jsx             # Button primitive
+
+  lib/
+    calendar/
+      constants.js           # Month/week labels
+      date-utils.js          # Calendar cell builders + Myanmar conversion helpers
+      mmcal/ceMmDateTime.js  # Myanmar calendar algorithm source
+
+    utils.js                 # Shared utility helpers (cn)
+```
+
+## Run Locally
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Build and Start (Production)
 
-## Learn More
+```bash
+npm run build
+npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Lint
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Myanmar date and holiday calculation is handled in `src/lib/calendar/date-utils.js` using `ceMmDateTime`.
+- `page.js` is the top-level container for calendar navigation state and view mode transitions.

@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Circle, Star } from "lucide-react";
 
 import { WEEKDAY_LABELS } from "@/lib/calendar/constants";
 import {
@@ -53,8 +53,18 @@ export default function DetailedMonthView({
           const isSelected = isSameDate(cell.date, selectedDate);
           const holiday = getHolidayForDate(cell.date);
           const myanmarDate = getMyanmarDateData(cell.date);
-          const shouldShowEmphasis =
-            myanmarDate.dayPhaseEn === "Full Moon" || myanmarDate.dayPhaseEn === "New Moon";
+          const dayPhaseMy = myanmarDate.dayPhaseMy.trim();
+          const isMyanmarNewMoon = dayPhaseMy.includes("ကွယ်");
+          const isWaningAfterFullMoon = dayPhaseMy.includes("ကျော်");
+          const isMyanmarFullMoon =
+            !isWaningAfterFullMoon &&
+            (dayPhaseMy.includes("ပြည့်") || dayPhaseMy.includes("ပြည့္"));
+          const moonIconClass = isMyanmarNewMoon
+            ? "fill-zinc-400 text-zinc-400"
+            : isMyanmarFullMoon || myanmarDate.dayPhaseEn === "Full Moon"
+              ? "fill-amber-400 text-amber-400"
+              : null;
+          const shouldShowEmphasis = Boolean(moonIconClass);
 
           return (
             <button
@@ -63,7 +73,9 @@ export default function DetailedMonthView({
               onClick={() => {
                 onSelectDate(cell.date);
                 if (!cell.currentMonth) {
-                  onFocusMonth(new Date(cell.date.getFullYear(), cell.date.getMonth(), 1));
+                  onFocusMonth(
+                    new Date(cell.date.getFullYear(), cell.date.getMonth(), 1),
+                  );
                 }
               }}
               className={cn(
@@ -80,9 +92,14 @@ export default function DetailedMonthView({
                   className={cn(
                     "grid h-8 w-8 place-items-center rounded-full text-xl font-bold leading-none",
                     isSelected && "bg-[#b7702a] text-white",
-                    !isSelected && isToday && "border border-[#b7702a] text-[#9f5f20]",
+                    !isSelected &&
+                      isToday &&
+                      "border border-[#b7702a] text-[#9f5f20]",
                     !isSelected && !isToday && isWeekend && "text-rose-600",
-                    !isSelected && !isToday && cell.currentMonth && "text-stone-800",
+                    !isSelected &&
+                      !isToday &&
+                      cell.currentMonth &&
+                      "text-stone-800",
                     !cell.currentMonth && "text-stone-400",
                   )}
                 >
@@ -90,16 +107,23 @@ export default function DetailedMonthView({
                 </span>
 
                 <div className="flex items-center gap-1">
-                  {holiday && <Star className="h-3.5 w-3.5 fill-rose-500 text-rose-500" />}
+                  {holiday && (
+                    <Star className="h-3.5 w-3.5 fill-rose-500 text-rose-500" />
+                  )}
                   {shouldShowEmphasis && (
-                    <span className="h-3 w-3 rounded-full bg-amber-400 ring-1 ring-amber-600/20" />
+                    <Circle className={cn("h-5 w-5", moonIconClass)} />
                   )}
                 </div>
               </div>
 
-              <div className={cn("mt-2 space-y-0.5", !cell.currentMonth && "opacity-60")}>
+              <div
+                className={cn(
+                  "mt-2 space-y-0.5",
+                  !cell.currentMonth && "opacity-60",
+                )}
+              >
                 <p className="text-[11px] font-semibold text-stone-500">
-                  {myanmarDate.monthMy} {myanmarDate.yearMy}
+                  {myanmarDate.monthMy}
                 </p>
                 <p
                   className={cn(
@@ -109,7 +133,11 @@ export default function DetailedMonthView({
                 >
                   {myanmarDate.dayPhaseMy} {myanmarDate.dayNumberMy}
                 </p>
-                {holiday && <p className="text-[11px] font-bold text-rose-600">{holiday.title}</p>}
+                {holiday && (
+                  <p className="text-[11px] font-bold text-rose-600">
+                    {holiday.title}
+                  </p>
+                )}
               </div>
             </button>
           );

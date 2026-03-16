@@ -196,8 +196,10 @@ export default function DetailedMonthView({
 
                 <span
                   className={cn(
-                    "absolute top-1/2 grid -translate-y-1/2 place-items-center rounded-full font-bold leading-none",
-                    compact ? "right-1.5 h-7 w-7 text-lg" : "right-2 h-8 w-8 text-xl",
+                    "absolute grid -translate-y-1/2 place-items-center rounded-full font-bold leading-none",
+                    compact
+                      ? "right-1.5 top-[40%] h-7 w-7 text-lg"
+                      : "right-2 top-1/2 h-8 w-8 text-xl",
                     isSelected && "bg-[#0f766e] text-white",
                     !isSelected &&
                       isToday &&

@@ -36,7 +36,7 @@ export default function CalendarCell({
   return (
     <div className="group relative">
       {holiday && (
-        <div className="pointer-events-none absolute left-1/2 top-0 z-20 hidden -translate-x-1/2 -translate-y-[105%] whitespace-nowrap rounded-md bg-stone-900 px-2 py-1 text-xs font-semibold text-white shadow-md group-hover:block">
+        <div className="font-myanmar pointer-events-none absolute left-1/2 top-0 z-20 hidden -translate-x-1/2 -translate-y-[105%] whitespace-nowrap rounded-md bg-stone-900 px-2 py-1 text-xs font-semibold text-white shadow-md group-hover:block">
           {holiday.title}
         </div>
       )}
@@ -73,7 +73,7 @@ export default function CalendarCell({
       >
         <span
           className={cn(
-            "absolute font-bold",
+            "font-myanmar absolute font-bold",
             compact ? "left-2 top-2 text-xs" : "left-3 top-3 text-sm",
             isWeekend && cell.currentMonth && "text-red-600",
             isWeekend && !cell.currentMonth && "text-red-400",
@@ -136,7 +136,7 @@ export default function CalendarCell({
         >
           <p
             className={cn(
-              "font-semibold leading-tight text-stone-500",
+              "font-myanmar font-semibold leading-tight text-stone-500",
               compact ? "text-[9px]" : "text-[10px]",
             )}
           >
@@ -145,6 +145,7 @@ export default function CalendarCell({
           <p
             title={holiday?.title}
             className={cn(
+              "font-myanmar",
               compact ? "h-3 truncate text-[9px] font-bold" : "h-3 text-[10px] font-bold",
               holiday ? "text-rose-600" : "text-transparent",
             )}

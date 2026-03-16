@@ -58,7 +58,12 @@ export default function DetailedMonthView({
           "cursor-pointer transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_-20px_rgba(0,0,0,0.4)]",
       )}
     >
-      <MonthHeader title={monthTitle} subtitle={myanmarSubtitle} compact={compact} />
+      <MonthHeader
+        title={monthTitle}
+        subtitle={myanmarSubtitle}
+        compact={compact}
+        subtitleClassName="font-myanmar"
+      />
 
       <div className="mt-2 grid grid-cols-7 gap-1">
         {detailedMonth.cells.map((cell, index) => (

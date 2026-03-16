@@ -33,7 +33,7 @@ export default function DateDetailModal({
               <p className="text-[11px] font-bold uppercase tracking-wide text-stone-500">
                 Myanmar Year
               </p>
-              <p className="mt-1 text-base font-bold text-stone-800">
+              <p className="font-myanmar mt-1 text-base font-bold text-stone-800">
                 {myanmarDate.yearMy}
               </p>
             </div>
@@ -42,7 +42,7 @@ export default function DateDetailModal({
               <p className="text-[11px] font-bold uppercase tracking-wide text-stone-500">
                 Myanmar Date
               </p>
-              <p className="mt-1 text-sm font-semibold text-stone-800">
+              <p className="font-myanmar mt-1 text-sm font-semibold text-stone-800">
                 {myanmarDate.monthMy} {myanmarDate.dayPhaseMy}{" "}
                 {myanmarDate.dayNumberMy}
               </p>
@@ -61,7 +61,7 @@ export default function DateDetailModal({
               </p>
               <p
                 className={cn(
-                  "mt-1 text-sm font-semibold",
+                  "font-myanmar mt-1 text-sm font-semibold",
                   holiday ? "text-rose-700" : "text-stone-700",
                 )}
               >

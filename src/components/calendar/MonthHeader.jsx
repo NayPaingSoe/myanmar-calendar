@@ -1,7 +1,12 @@
 import { WEEKDAY_LABELS } from "@/lib/calendar/constants";
 import { cn } from "@/lib/utils";
 
-export default function MonthHeader({ title, subtitle, compact = false }) {
+export default function MonthHeader({
+  title,
+  subtitle,
+  compact = false,
+  subtitleClassName,
+}) {
   return (
     <>
       <div className="flex flex-wrap items-end justify-between gap-2 border-b border-stone-200 pb-3">
@@ -13,7 +18,13 @@ export default function MonthHeader({ title, subtitle, compact = false }) {
         >
           {title}
         </h2>
-        <p className={cn("font-semibold text-[#0f766e]", compact ? "text-xs" : "text-sm")}>
+        <p
+          className={cn(
+            "font-semibold text-[#0f766e]",
+            compact ? "text-xs" : "text-sm",
+            subtitleClassName,
+          )}
+        >
           {subtitle}
         </p>
       </div>

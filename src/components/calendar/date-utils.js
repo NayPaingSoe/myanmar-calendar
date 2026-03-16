@@ -80,3 +80,28 @@ export function getMyanmarDateData(date) {
     dayNumberMy: myanmarDate.day.fd.my,
   };
 }
+
+export function getMyanmarMonthYearRangeForWesternMonth(year, month) {
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const monthNames = [];
+  const yearNames = [];
+
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    const myanmarDate = new Mycal(new Date(year, month, day));
+    const currentMonthName = myanmarDate.month.my;
+    const currentYearName = myanmarDate.year.my;
+
+    if (monthNames[monthNames.length - 1] !== currentMonthName) {
+      monthNames.push(currentMonthName);
+    }
+
+    if (yearNames[yearNames.length - 1] !== currentYearName) {
+      yearNames.push(currentYearName);
+    }
+  }
+
+  return {
+    monthRangeMy: monthNames.join("-"),
+    yearRangeMy: yearNames.join("-"),
+  };
+}

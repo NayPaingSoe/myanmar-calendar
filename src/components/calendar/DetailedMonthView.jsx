@@ -1,7 +1,12 @@
 import { Star } from "lucide-react";
 
 import { WEEKDAY_LABELS } from "@/components/calendar/constants";
-import { getHolidayForDate, getMyanmarDateData, isSameDate } from "@/components/calendar/date-utils";
+import {
+  getHolidayForDate,
+  getMyanmarDateData,
+  getMyanmarMonthYearRangeForWesternMonth,
+  isSameDate,
+} from "@/components/calendar/date-utils";
 import { cn } from "@/lib/utils";
 
 export default function DetailedMonthView({
@@ -11,17 +16,20 @@ export default function DetailedMonthView({
   onSelectDate,
   onFocusMonth,
 }) {
-  const monthHeaderMyanmar = getMyanmarDateData(new Date(detailedMonth.year, detailedMonth.month, 1));
+  const monthHeaderMyanmar = getMyanmarMonthYearRangeForWesternMonth(
+    detailedMonth.year,
+    detailedMonth.month,
+  );
 
   return (
     <article className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-[0_10px_30px_-20px_rgba(0,0,0,0.35)]">
       <div className="border-b border-stone-200 bg-stone-50 px-4 py-3">
         <h2 className="text-2xl font-bold tracking-tight text-stone-800">
           {detailedMonth.name} {detailedMonth.year}
+          <span className="ml-2 text-lg font-semibold text-[#8a4f1b]">
+            {monthHeaderMyanmar.monthRangeMy} {monthHeaderMyanmar.yearRangeMy}
+          </span>
         </h2>
-        <p className="mt-1 text-sm font-semibold text-[#8a4f1b]">
-          {monthHeaderMyanmar.monthMy} {monthHeaderMyanmar.yearMy}
-        </p>
       </div>
 
       <div className="grid grid-cols-7 border-b border-stone-200 bg-stone-100">

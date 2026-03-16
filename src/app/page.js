@@ -37,6 +37,16 @@ export default function Home() {
     });
   }, [windowStart]);
 
+  const rangeLabel = useMemo(() => {
+    if (viewMode === "month") {
+      return `${MONTH_NAMES[focusedMonth.getMonth()]} ${focusedMonth.getFullYear()}`;
+    }
+
+    const first = visibleMonths[0];
+    const last = visibleMonths[visibleMonths.length - 1];
+    return `${first.name} ${first.year} - ${last.name} ${last.year}`;
+  }, [focusedMonth, viewMode, visibleMonths]);
+
   const detailedMonth = useMemo(() => {
     const year = focusedMonth.getFullYear();
     const month = focusedMonth.getMonth();
@@ -49,42 +59,17 @@ export default function Home() {
     };
   }, [focusedMonth]);
 
-  const rangeLabel = useMemo(() => {
-    if (viewMode === "month") {
-      return `${MONTH_NAMES[focusedMonth.getMonth()]} ${focusedMonth.getFullYear()}`;
-    }
-
-    const first = visibleMonths[0];
-    const last = visibleMonths[visibleMonths.length - 1];
-    return `${first.name} ${first.year} - ${last.name} ${last.year}`;
-  }, [focusedMonth, viewMode, visibleMonths]);
-
   const yearOptions = useMemo(() => {
     const centerYear =
       viewMode === "month" ? focusedMonth.getFullYear() : windowStart.getFullYear();
-
     return Array.from({ length: 11 }, (_, idx) => centerYear - 5 + idx);
   }, [focusedMonth, viewMode, windowStart]);
-
-  const monthYearOptions = useMemo(() => {
-    const currentYear = focusedMonth.getFullYear();
-    const startYear = currentYear - 3;
-    const endYear = currentYear + 3;
-    const options = [];
-
-    for (let year = startYear; year <= endYear; year += 1) {
-      for (let month = 0; month < 12; month += 1) {
-        options.push({ year, month, value: `${year}-${month}` });
-      }
-    }
-
-    return options;
-  }, [focusedMonth]);
 
   const jumpToToday = () => {
     const now = new Date();
     setSelectedDate(now);
     setFocusedMonth(new Date(now.getFullYear(), now.getMonth(), 1));
+    setViewMode("four");
     setWindowStart(getFourMonthWindowStart(now));
   };
 
@@ -97,17 +82,26 @@ export default function Home() {
     setWindowStart((current) => shiftMonthWindow(current, delta * 4));
   };
 
+  const handleYearChange = (nextDate) => {
+    if (viewMode === "month") {
+      setFocusedMonth(nextDate);
+      return;
+    }
+
+    setWindowStart(nextDate);
+  };
+
   const enterMonthView = (year, month) => {
     setFocusedMonth(new Date(year, month, 1));
     setViewMode("month");
   };
 
-  const switchToMonth = (date) => {
-    setViewMode("month");
+  const switchToMonthView = (date) => {
     setFocusedMonth(new Date(date.getFullYear(), date.getMonth(), 1));
+    setViewMode("month");
   };
 
-  const switchToFourMonth = () => {
+  const switchToFourMonthView = () => {
     setViewMode("four");
     setWindowStart(getFourMonthWindowStart(focusedMonth));
   };
@@ -123,15 +117,13 @@ export default function Home() {
             focusedMonth={focusedMonth}
             windowStart={windowStart}
             yearOptions={yearOptions}
-            monthYearOptions={monthYearOptions}
             rangeLabel={rangeLabel}
             selectedDate={selectedDate}
             onJumpToToday={jumpToToday}
             onShift={handleShift}
-            onFocusedMonthChange={setFocusedMonth}
-            onWindowStartChange={setWindowStart}
-            onSwitchToMonth={switchToMonth}
-            onSwitchToFourMonth={switchToFourMonth}
+            onWindowStartChange={handleYearChange}
+            onSwitchToMonth={switchToMonthView}
+            onSwitchToFourMonth={switchToFourMonthView}
           />
 
           {viewMode === "month" ? (

@@ -1,5 +1,5 @@
 import { WEEKDAY_LABELS } from "@/lib/calendar/constants";
-import { getHolidayForDate, isSameDate } from "@/lib/calendar/date-utils";
+import { getHolidayForDate, getMyanmarDateData, isSameDate } from "@/lib/calendar/date-utils";
 import { cn } from "@/lib/utils";
 
 export default function FourMonthGrid({
@@ -10,7 +10,7 @@ export default function FourMonthGrid({
   onEnterMonthView,
 }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-4">
+    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
       {visibleMonths.map((month) => (
         <article
           key={`${month.year}-${month.month}`}
@@ -33,40 +33,67 @@ export default function FourMonthGrid({
             ))}
           </div>
 
-          <div className="mt-2 grid grid-cols-7 gap-y-2">
+          <div className="mt-2 grid grid-cols-7 gap-1">
             {month.cells.map((day, index) => {
               if (!day) {
-                return <span key={`${month.name}-blank-${index}`} className="h-8 w-8" />;
+                return <div key={`${month.name}-blank-${index}`} className="h-[72px] rounded-md" />;
               }
 
               const thisDate = new Date(month.year, month.month, day);
               const isWeekend = index % 7 === 0 || index % 7 === 6;
               const isToday = isSameDate(thisDate, today);
               const isSelected = isSameDate(thisDate, selectedDate);
-              const hasHoliday = Boolean(getHolidayForDate(thisDate));
+              const holiday = getHolidayForDate(thisDate);
+              const myanmarDate = getMyanmarDateData(thisDate);
+              const hasHoliday = Boolean(holiday);
 
               return (
-                <button
-                  key={`${month.year}-${month.month}-${day}`}
-                  type="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onSelectDate(thisDate);
-                  }}
-                  className={cn(
-                    "relative grid h-8 w-8 place-items-center rounded-full text-sm font-semibold transition",
-                    isSelected && "bg-[#b7702a] text-white shadow-md shadow-[#b7702a]/35",
-                    !isSelected && isToday && "border border-[#b7702a] bg-amber-50 text-[#9f5f20]",
-                    !isSelected && !isToday && isWeekend && "text-rose-500",
-                    !isSelected && !isToday && !isWeekend && "text-stone-700",
-                    !isSelected && "hover:bg-stone-100",
+                <div key={`${month.year}-${month.month}-${day}`} className="relative group">
+                  {hasHoliday && (
+                    <div className="pointer-events-none absolute left-1/2 top-0 z-20 hidden -translate-x-1/2 -translate-y-[105%] whitespace-nowrap rounded-md bg-stone-900 px-2 py-1 text-xs font-semibold text-white shadow-md group-hover:block">
+                      {holiday.title}
+                    </div>
                   )}
-                >
-                  <span>{day}</span>
-                  {hasHoliday && !isSelected && (
-                    <span className="absolute -bottom-0.5 h-1 w-1 rounded-full bg-rose-500" />
-                  )}
-                </button>
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      onSelectDate(thisDate);
+                    }}
+                    className={cn(
+                      "relative h-[72px] w-full rounded-md border p-1.5 text-left transition",
+                      hasHoliday && "border-rose-300 bg-rose-50/70",
+                      !hasHoliday && "border-stone-200 bg-white",
+                      isSelected && "border-[#b7702a] ring-1 ring-[#b7702a]/50",
+                      !isSelected && isToday && "border-[#b7702a] bg-amber-50/60",
+                      "hover:bg-stone-50",
+                    )}
+                  >
+                    <div className="flex items-start justify-between">
+                      <span
+                        className={cn(
+                          "text-sm font-bold",
+                          hasHoliday && "text-rose-700",
+                          !hasHoliday && isWeekend && "text-rose-500",
+                          !hasHoliday && !isWeekend && "text-stone-700",
+                        )}
+                      >
+                        {day}
+                      </span>
+                      {hasHoliday && (
+                        <span className="rounded bg-rose-100 px-1.5 py-0.5 text-[9px] font-bold text-rose-700">
+                          HOLIDAY
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-1 truncate text-[10px] font-semibold text-stone-500">
+                      {myanmarDate.monthMy}
+                    </p>
+                    <p className="truncate text-[10px] font-semibold text-stone-700">
+                      {myanmarDate.dayPhaseMy} {myanmarDate.dayNumberMy}
+                    </p>
+                  </button>
+                </div>
               );
             })}
           </div>

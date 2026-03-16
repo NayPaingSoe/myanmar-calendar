@@ -111,12 +111,20 @@ export default function CalendarCell({
           className={cn(
             "absolute grid -translate-y-1/2 place-items-center rounded-full font-bold leading-none",
             compact
-              ? "right-1.5 top-[40%] h-8 w-8 text-xl"
-              : "right-2 top-1/2 h-10 w-10 text-2xl",
+              ? "right-1.5 top-[40%] h-9 w-9 text-2xl"
+              : "right-2 top-1/2 h-11 w-11 text-3xl",
             isSelected && "bg-[#0f766e] text-white",
             !isSelected && isToday && "border border-[#0f766e] text-[#0f766e]",
-            !isSelected && !isToday && isWeekend && cell.currentMonth && "text-red-600",
-            !isSelected && !isToday && isWeekend && !cell.currentMonth && "text-red-400",
+            !isSelected &&
+              !isToday &&
+              isWeekend &&
+              cell.currentMonth &&
+              "text-red-600",
+            !isSelected &&
+              !isToday &&
+              isWeekend &&
+              !cell.currentMonth &&
+              "text-red-400",
             !isSelected &&
               !isToday &&
               !isWeekend &&

@@ -53,15 +53,10 @@ export default function DetailedMonthView({
           const isSelected = isSameDate(cell.date, selectedDate);
           const holiday = getHolidayForDate(cell.date);
           const myanmarDate = getMyanmarDateData(cell.date);
-          const dayPhaseMy = myanmarDate.dayPhaseMy.trim();
-          const isMyanmarNewMoon = dayPhaseMy.includes("ကွယ်");
-          const isWaningAfterFullMoon = dayPhaseMy.includes("ကျော်");
-          const isMyanmarFullMoon =
-            !isWaningAfterFullMoon &&
-            (dayPhaseMy.includes("ပြည့်") || dayPhaseMy.includes("ပြည့္"));
+          const isMyanmarNewMoon = myanmarDate.dayPhaseEn === "New Moon";
           const moonIconClass = isMyanmarNewMoon
             ? "fill-zinc-400 text-zinc-400"
-            : isMyanmarFullMoon || myanmarDate.dayPhaseEn === "Full Moon"
+            : myanmarDate.dayPhaseEn === "Full Moon"
               ? "fill-amber-400 text-amber-400"
               : null;
           const shouldShowEmphasis = Boolean(moonIconClass);
@@ -83,7 +78,11 @@ export default function DetailedMonthView({
                   onSelectDate(cell.date);
                   if (!cell.currentMonth) {
                     onFocusMonth(
-                      new Date(cell.date.getFullYear(), cell.date.getMonth(), 1),
+                      new Date(
+                        cell.date.getFullYear(),
+                        cell.date.getMonth(),
+                        1,
+                      ),
                     );
                   }
                 }}

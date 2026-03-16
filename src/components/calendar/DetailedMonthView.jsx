@@ -10,14 +10,7 @@ import {
   isSameDate,
 } from "@/lib/calendar/date-utils";
 import { cn } from "@/lib/utils";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import DateDetailModal from "@/components/calendar/DateDetailModal";
 
 export default function DetailedMonthView({
   detailedMonth,
@@ -258,7 +251,7 @@ export default function DetailedMonthView({
         })}
       </div>
 
-      <Dialog
+      <DateDetailModal
         open={Boolean(enableDetailModal && detailDate && detailMyanmarDate)}
         onOpenChange={(open) => {
           if (!open) {
@@ -266,68 +259,10 @@ export default function DetailedMonthView({
             suppressOpenMonthUntilRef.current = Date.now() + 280;
           }
         }}
-      >
-        <DialogContent className="max-w-md overflow-hidden p-0" showClose={false}>
-          <div className="border-b border-stone-200 bg-[linear-gradient(180deg,#fff8ef_0%,#fff_100%)] px-5 py-4">
-            <DialogHeader className="gap-1">
-              <DialogTitle className="text-lg">Date Detail</DialogTitle>
-              <DialogDescription className="font-semibold text-[#8a4f1b]">
-                {detailWesternDate}
-              </DialogDescription>
-            </DialogHeader>
-          </div>
-
-          {detailMyanmarDate && (
-            <div className="space-y-3 p-5">
-              <div className="rounded-xl border border-stone-200 bg-stone-50/80 px-3 py-2">
-                <p className="text-[11px] font-bold uppercase tracking-wide text-stone-500">
-                  Myanmar Year
-                </p>
-                <p className="mt-1 text-base font-bold text-stone-800">
-                  {detailMyanmarDate.yearMy}
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-stone-200 bg-stone-50/80 px-3 py-2">
-                <p className="text-[11px] font-bold uppercase tracking-wide text-stone-500">
-                  Myanmar Date
-                </p>
-                <p className="mt-1 text-sm font-semibold text-stone-800">
-                  {detailMyanmarDate.monthMy} {detailMyanmarDate.dayPhaseMy}{" "}
-                  {detailMyanmarDate.dayNumberMy}
-                </p>
-              </div>
-
-              <div
-                className={cn(
-                  "rounded-xl border px-3 py-2",
-                  detailHoliday
-                    ? "border-rose-200 bg-rose-50/70"
-                    : "border-stone-200 bg-stone-50/80",
-                )}
-              >
-                <p className="text-[11px] font-bold uppercase tracking-wide text-stone-500">
-                  Holiday
-                </p>
-                <p
-                  className={cn(
-                    "mt-1 text-sm font-semibold",
-                    detailHoliday ? "text-rose-700" : "text-stone-700",
-                  )}
-                >
-                  {detailHoliday?.title ?? "No holiday"}
-                </p>
-              </div>
-            </div>
-          )}
-
-          <div className="flex justify-end border-t border-stone-200 bg-stone-50/70 px-5 py-3">
-            <DialogClose className="h-9 w-auto rounded-lg bg-[#b7702a] px-4 text-sm font-semibold text-white hover:bg-[#9f5f20] hover:text-white">
-              Close
-            </DialogClose>
-          </div>
-        </DialogContent>
-      </Dialog>
+        westernDate={detailWesternDate}
+        myanmarDate={detailMyanmarDate}
+        holiday={detailHoliday}
+      />
     </article>
   );
 }

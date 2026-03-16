@@ -36,16 +36,6 @@ export default function Home() {
     });
   }, [windowStart]);
 
-  const rangeLabel = useMemo(() => {
-    if (viewMode === "month") {
-      return `${MONTH_NAMES[focusedMonth.getMonth()]} ${focusedMonth.getFullYear()}`;
-    }
-
-    const first = visibleMonths[0];
-    const last = visibleMonths[visibleMonths.length - 1];
-    return `${first.name} ${first.year} - ${last.name} ${last.year}`;
-  }, [focusedMonth, viewMode, visibleMonths]);
-
   const detailedMonth = useMemo(() => {
     const year = focusedMonth.getFullYear();
     const month = focusedMonth.getMonth();
@@ -116,7 +106,6 @@ export default function Home() {
             focusedMonth={focusedMonth}
             windowStart={windowStart}
             yearOptions={yearOptions}
-            rangeLabel={rangeLabel}
             selectedDate={selectedDate}
             onJumpToToday={jumpToToday}
             onShift={handleShift}

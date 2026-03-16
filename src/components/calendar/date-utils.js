@@ -1,0 +1,102 @@
+import { HOLIDAY_TEMPLATES } from "@/components/calendar/constants";
+
+export function buildMonthCells(year, month) {
+  const firstWeekday = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const cells = Array(firstWeekday).fill(null);
+
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    cells.push(day);
+  }
+
+  while (cells.length % 7 !== 0) {
+    cells.push(null);
+  }
+
+  return cells;
+}
+
+export function buildExpandedMonthCells(year, month) {
+  const firstWeekday = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPreviousMonth = new Date(year, month, 0).getDate();
+
+  const cells = [];
+
+  for (let i = firstWeekday - 1; i >= 0; i -= 1) {
+    const day = daysInPreviousMonth - i;
+    const date = new Date(year, month - 1, day);
+    cells.push({ day, date, currentMonth: false });
+  }
+
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    const date = new Date(year, month, day);
+    cells.push({ day, date, currentMonth: true });
+  }
+
+  let nextMonthDay = 1;
+  while (cells.length < 42) {
+    const date = new Date(year, month + 1, nextMonthDay);
+    cells.push({ day: nextMonthDay, date, currentMonth: false });
+    nextMonthDay += 1;
+  }
+
+  return cells;
+}
+
+export function getFourMonthWindowStart(date) {
+  const monthWindowStart = Math.floor(date.getMonth() / 4) * 4;
+  return new Date(date.getFullYear(), monthWindowStart, 1);
+}
+
+export function shiftMonthWindow(date, deltaMonths) {
+  return new Date(date.getFullYear(), date.getMonth() + deltaMonths, 1);
+}
+
+export function isSameDate(a, b) {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+}
+
+export function getHolidayForDate(date) {
+  return HOLIDAY_TEMPLATES.find(
+    (holiday) => holiday.month === date.getMonth() && holiday.day === date.getDate(),
+  );
+}
+
+export function getMoonPhaseText(date) {
+  const daysSinceEpoch = Math.floor(date.getTime() / 86400000);
+  const cycleDay = ((daysSinceEpoch + 18) % 30) + 1;
+
+  if (cycleDay === 15) {
+    return "Full Moon";
+  }
+
+  if (cycleDay === 30) {
+    return "New Moon";
+  }
+
+  if (cycleDay < 15) {
+    return `Waxing ${cycleDay}`;
+  }
+
+  return `Waning ${cycleDay - 15}`;
+}
+
+export function getAstrologyTag(date) {
+  const value = (date.getDate() + date.getMonth()) % 7;
+
+  if (value === 0 || value === 3) {
+    return "Yatyaza";
+  }
+
+  if (value === 5) {
+    return "Pyathada";
+  }
+
+  return null;
+}

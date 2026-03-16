@@ -87,38 +87,45 @@ export default function DetailedMonthView({
                 "hover:bg-stone-50",
               )}
             >
-              <div className="flex items-start justify-between">
-                <span
-                  className={cn(
-                    "grid h-8 w-8 place-items-center rounded-full text-xl font-bold leading-none",
-                    isSelected && "bg-[#b7702a] text-white",
-                    !isSelected &&
-                      isToday &&
-                      "border border-[#b7702a] text-[#9f5f20]",
-                    !isSelected && !isToday && isWeekend && "text-rose-600",
-                    !isSelected &&
-                      !isToday &&
-                      cell.currentMonth &&
-                      "text-stone-800",
-                    !cell.currentMonth && "text-stone-400",
-                  )}
-                >
-                  {cell.day}
-                </span>
+              <span
+                className={cn(
+                  "absolute left-4 top-4 text-sm font-bold",
+                  cell.currentMonth ? "text-stone-600" : "text-stone-400",
+                )}
+              >
+                {myanmarDate.dayNumberMy}
+              </span>
 
-                <div className="flex items-center gap-1">
-                  {holiday && (
-                    <Star className="h-3.5 w-3.5 fill-rose-500 text-rose-500" />
-                  )}
-                  {shouldShowEmphasis && (
-                    <Circle className={cn("h-5 w-5", moonIconClass)} />
-                  )}
-                </div>
+              <div className="absolute right-2 top-2 flex items-center gap-1">
+                {holiday && (
+                  <Star className="h-3.5 w-3.5 fill-rose-500 text-rose-500" />
+                )}
+                {shouldShowEmphasis && (
+                  <Circle className={cn("h-5 w-5", moonIconClass)} />
+                )}
               </div>
+
+              <span
+                className={cn(
+                  "absolute right-2 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full text-xl font-bold leading-none",
+                  isSelected && "bg-[#b7702a] text-white",
+                  !isSelected &&
+                    isToday &&
+                    "border border-[#b7702a] text-[#9f5f20]",
+                  !isSelected && !isToday && isWeekend && "text-rose-600",
+                  !isSelected &&
+                    !isToday &&
+                    cell.currentMonth &&
+                    "text-stone-800",
+                  !cell.currentMonth && "text-stone-400",
+                )}
+              >
+                {cell.day}
+              </span>
 
               <div
                 className={cn(
-                  "mt-2 space-y-0.5",
+                  "mt-14 space-y-0.5 pr-10",
                   !cell.currentMonth && "opacity-60",
                 )}
               >
@@ -131,14 +138,14 @@ export default function DetailedMonthView({
                     shouldShowEmphasis ? "text-[#7b4516]" : "text-stone-700",
                   )}
                 >
-                  {myanmarDate.dayPhaseMy} {myanmarDate.dayNumberMy}
+                  {myanmarDate.dayPhaseMy}
                 </p>
-                {holiday && (
-                  <p className="text-[11px] font-bold text-rose-600">
-                    {holiday.title}
-                  </p>
-                )}
               </div>
+              {holiday && (
+                <p className="text-[11px] font-bold text-rose-600">
+                  {holiday.title}
+                </p>
+              )}
             </button>
           );
         })}

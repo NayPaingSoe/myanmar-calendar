@@ -110,7 +110,7 @@ export default function Home() {
     <div className="min-h-screen bg-[radial-gradient(circle_at_20%_0%,#f9efe5_0%,#f3f0eb_45%,#ececeb_100%)] text-stone-800">
       <HeaderBar />
 
-      <main className="mx-auto max-w-[1460px] px-4 py-5 md:px-12 lg:px-20 lg:py-6 xl:px-24">
+      <main className="mx-auto max-w-[1460px] px-3 py-3 md:px-6 lg:px-12 lg:py-4 xl:px-14">
         <section className="space-y-5">
           <CalendarToolbar
             viewMode={viewMode}

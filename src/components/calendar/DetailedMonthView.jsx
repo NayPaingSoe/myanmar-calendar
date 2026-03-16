@@ -38,7 +38,7 @@ export default function DetailedMonthView({
             key={`month-weekday-${label}`}
             className={cn(
               "text-center",
-              index === 0 || index === 6 ? "text-rose-500" : "text-stone-500",
+              index === 0 || index === 6 ? "text-red-600" : "text-stone-500",
             )}
           >
             {label}
@@ -122,12 +122,17 @@ export default function DetailedMonthView({
                     !isSelected &&
                       isToday &&
                       "border border-[#b7702a] text-[#9f5f20]",
-                    !isSelected && !isToday && isWeekend && "text-rose-600",
+                    !isSelected && !isToday && isWeekend && "text-red-600",
                     !isSelected &&
                       !isToday &&
+                      !isWeekend &&
                       cell.currentMonth &&
                       "text-stone-800",
-                    !cell.currentMonth && "text-stone-400",
+                    !isSelected &&
+                      !isToday &&
+                      !isWeekend &&
+                      !cell.currentMonth &&
+                      "text-stone-400",
                   )}
                 >
                   {cell.day}

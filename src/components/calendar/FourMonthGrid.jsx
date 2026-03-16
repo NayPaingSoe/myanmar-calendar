@@ -26,7 +26,7 @@ export default function FourMonthGrid({
             {WEEKDAY_LABELS.map((label, index) => (
               <span
                 key={`${month.name}-${label}`}
-                className={cn(index === 0 || index === 6 ? "text-rose-500" : "text-stone-500")}
+                className={cn(index === 0 || index === 6 ? "text-red-600" : "text-stone-500")}
               >
                 {label}
               </span>
@@ -74,7 +74,7 @@ export default function FourMonthGrid({
                         className={cn(
                           "text-sm font-bold",
                           hasHoliday && "text-rose-700",
-                          !hasHoliday && isWeekend && "text-rose-500",
+                          !hasHoliday && isWeekend && "text-red-600",
                           !hasHoliday && !isWeekend && "text-stone-700",
                         )}
                       >

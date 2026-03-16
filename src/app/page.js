@@ -3,16 +3,16 @@
 import { useMemo, useState } from "react";
 
 import CalendarToolbar from "@/components/calendar/CalendarToolbar";
-import { MONTH_NAMES } from "@/components/calendar/constants";
 import DetailedMonthView from "@/components/calendar/DetailedMonthView";
 import FourMonthGrid from "@/components/calendar/FourMonthGrid";
 import HeaderBar from "@/components/calendar/HeaderBar";
+import { MONTH_NAMES } from "@/lib/calendar/constants";
 import {
   buildExpandedMonthCells,
   buildMonthCells,
   getFourMonthWindowStart,
   shiftMonthWindow,
-} from "@/components/calendar/date-utils";
+} from "@/lib/calendar/date-utils";
 
 export default function Home() {
   const today = useMemo(() => new Date(), []);

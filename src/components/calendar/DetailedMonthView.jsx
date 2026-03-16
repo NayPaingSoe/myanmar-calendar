@@ -1,12 +1,12 @@
 import { Star } from "lucide-react";
 
-import { WEEKDAY_LABELS } from "@/components/calendar/constants";
+import { WEEKDAY_LABELS } from "@/lib/calendar/constants";
 import {
   getHolidayForDate,
   getMyanmarDateData,
   getMyanmarMonthYearRangeForWesternMonth,
   isSameDate,
-} from "@/components/calendar/date-utils";
+} from "@/lib/calendar/date-utils";
 import { cn } from "@/lib/utils";
 
 export default function DetailedMonthView({

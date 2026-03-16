@@ -1,4 +1,4 @@
-import { HOLIDAY_TEMPLATES } from "@/components/calendar/constants";
+import { HOLIDAY_TEMPLATES } from "@/lib/calendar/constants";
 import { Mycal } from "mycal";
 
 export function buildMonthCells(year, month) {

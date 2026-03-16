@@ -1,6 +1,6 @@
 import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 
-import { MONTH_NAMES } from "@/components/calendar/constants";
+import { MONTH_NAMES } from "@/lib/calendar/constants";
 import { cn } from "@/lib/utils";
 
 export default function CalendarToolbar({

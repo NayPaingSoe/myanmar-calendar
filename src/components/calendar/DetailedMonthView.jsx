@@ -130,15 +130,7 @@ export default function DetailedMonthView({
                 )}
               >
                 <p className="text-[11px] font-semibold text-stone-500">
-                  {myanmarDate.monthMy}
-                </p>
-                <p
-                  className={cn(
-                    "text-sm font-bold",
-                    shouldShowEmphasis ? "text-[#7b4516]" : "text-stone-700",
-                  )}
-                >
-                  {myanmarDate.dayPhaseMy}
+                  {myanmarDate.monthMy} {myanmarDate.dayPhaseMy}
                 </p>
               </div>
               {holiday && (

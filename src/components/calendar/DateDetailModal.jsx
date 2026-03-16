@@ -21,7 +21,7 @@ export default function DateDetailModal({
         <div className="border-b border-stone-200 bg-[linear-gradient(180deg,#fff8ef_0%,#fff_100%)] px-5 py-4">
           <DialogHeader className="gap-1">
             <DialogTitle className="text-lg">Date Detail</DialogTitle>
-            <DialogDescription className="font-semibold text-[#8a4f1b]">
+            <DialogDescription className="font-semibold text-[#0f766e]">
               {westernDate}
             </DialogDescription>
           </DialogHeader>
@@ -72,7 +72,7 @@ export default function DateDetailModal({
         )}
 
         <div className="flex justify-end border-t border-stone-200 bg-stone-50/70 px-5 py-3">
-          <DialogClose className="h-9 w-auto rounded-lg bg-[#b7702a] px-4 text-sm font-semibold text-white hover:bg-[#9f5f20] hover:text-white">
+          <DialogClose className="h-9 w-auto rounded-lg bg-[#0f766e] px-4 text-sm font-semibold text-white hover:bg-[#115e59] hover:text-white">
             Close
           </DialogClose>
         </div>

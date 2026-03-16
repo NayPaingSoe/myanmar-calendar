@@ -22,7 +22,7 @@ function DialogClose({ className, ...props }) {
     <DialogPrimitive.Close
       data-slot="dialog-close"
       className={cn(
-        "inline-flex h-7 w-7 items-center justify-center rounded-md text-stone-500 transition hover:bg-stone-100 hover:text-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b7702a]/40",
+        "inline-flex h-7 w-7 items-center justify-center rounded-md text-stone-500 transition hover:bg-stone-100 hover:text-stone-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0f766e]/40",
         className,
       )}
       {...props}

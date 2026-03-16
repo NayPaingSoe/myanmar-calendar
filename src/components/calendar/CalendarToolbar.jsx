@@ -22,7 +22,7 @@ export default function CalendarToolbar({
           <button
             type="button"
             onClick={onJumpToToday}
-            className="rounded-full bg-[#b7702a] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#9f5f20]"
+            className="rounded-full bg-[#0f766e] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#115e59]"
           >
             Today
           </button>
@@ -34,7 +34,7 @@ export default function CalendarToolbar({
               onChange={(event) => {
                 onWindowStartChange(new Date(Number(event.target.value), controlMonth.getMonth(), 1));
               }}
-              className="appearance-none rounded-full border border-stone-300 bg-white py-2 pl-9 pr-8 text-sm font-semibold text-stone-700 shadow-sm outline-none transition focus:border-[#b7702a]"
+              className="appearance-none rounded-full border border-stone-300 bg-white py-2 pl-9 pr-8 text-sm font-semibold text-stone-700 shadow-sm outline-none transition focus:border-[#0f766e]"
             >
               {yearOptions.map((year) => (
                 <option key={year} value={year}>
@@ -73,7 +73,7 @@ export default function CalendarToolbar({
               onClick={() => onSwitchToMonth(selectedDate)}
               className={`rounded-full px-4 py-1.5 transition ${
                 viewMode === "month"
-                  ? "bg-[#b7702a] text-white shadow-sm"
+                  ? "bg-[#0f766e] text-white shadow-sm"
                   : "text-stone-600"
               }`}
             >
@@ -84,7 +84,7 @@ export default function CalendarToolbar({
               onClick={onSwitchToFourMonth}
               className={`rounded-full px-4 py-1.5 transition ${
                 viewMode === "four"
-                  ? "bg-[#b7702a] text-white shadow-sm"
+                  ? "bg-[#0f766e] text-white shadow-sm"
                   : "text-stone-600"
               }`}
             >

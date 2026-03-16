@@ -81,7 +81,7 @@ export default function DetailedMonthView({
         >
           {detailedMonth.name} {detailedMonth.year}
         </h2>
-        <p className={cn("font-semibold text-[#8a4f1b]", compact ? "text-xs" : "text-sm")}>
+        <p className={cn("font-semibold text-[#0f766e]", compact ? "text-xs" : "text-sm")}>
           {monthHeaderMyanmar.monthRangeMy} {monthHeaderMyanmar.yearRangeMy}
         </p>
       </div>
@@ -162,8 +162,8 @@ export default function DetailedMonthView({
                   holiday && "border-rose-300 bg-rose-50/60",
                   !holiday && "border-stone-200 bg-white",
                   !cell.currentMonth && "bg-stone-100/80",
-                  isSelected && "border-[#b7702a] ring-1 ring-[#b7702a]/50",
-                  !isSelected && isToday && "border-[#b7702a] bg-amber-50/60",
+                  isSelected && "border-[#0f766e] ring-1 ring-[#0f766e]/50",
+                  !isSelected && isToday && "border-[#0f766e] bg-teal-50/60",
                   "hover:bg-stone-50",
                 )}
               >
@@ -198,10 +198,10 @@ export default function DetailedMonthView({
                   className={cn(
                     "absolute top-1/2 grid -translate-y-1/2 place-items-center rounded-full font-bold leading-none",
                     compact ? "right-1.5 h-7 w-7 text-lg" : "right-2 h-8 w-8 text-xl",
-                    isSelected && "bg-[#b7702a] text-white",
+                    isSelected && "bg-[#0f766e] text-white",
                     !isSelected &&
                       isToday &&
-                      "border border-[#b7702a] text-[#9f5f20]",
+                      "border border-[#0f766e] text-[#0f766e]",
                     !isSelected && !isToday && isWeekend && "text-red-600",
                     !isSelected &&
                       !isToday &&

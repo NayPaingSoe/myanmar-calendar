@@ -96,7 +96,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_20%_0%,#f9efe5_0%,#f3f0eb_45%,#ececeb_100%)] text-stone-800">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_20%_0%,#ecfffb_0%,#eef6f7_45%,#e8f1f2_100%)] text-stone-800">
       <HeaderBar />
 
       <main className="mx-auto max-w-[1460px] px-3 py-3 md:px-6 lg:px-12 lg:py-4 xl:px-14">

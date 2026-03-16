@@ -1,4 +1,4 @@
-# Myanmar Calendar (Next.js)
+# Myanmar Calendar - မြန်မာပြက္ခဒိန် (Next.js)
 
 A Myanmar-focused calendar app built with Next.js App Router, Tailwind CSS, and shadcn/base-ui primitives.
 

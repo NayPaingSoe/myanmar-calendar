@@ -2,6 +2,10 @@
 
 A Myanmar-focused calendar app built with Next.js App Router, Tailwind CSS, and shadcn/base-ui primitives.
 
+## Demo
+
+- Live URL: https://myanmar-calendar-two.vercel.app
+
 ## Features
 
 - 4-month grid view (calendar cards)
@@ -77,3 +81,7 @@ npm run lint
 
 - Myanmar date and holiday calculation is handled in `src/lib/calendar/date-utils.js` using `ceMmDateTime`.
 - `page.js` is the top-level container for calendar navigation state and view mode transitions.
+
+## Credit
+
+- Reference: Yan Naing Aye (Cool Emerald) Algorithm.

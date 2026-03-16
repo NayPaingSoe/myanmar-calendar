@@ -9,7 +9,6 @@ import HeaderBar from "@/components/calendar/HeaderBar";
 import { MONTH_NAMES } from "@/lib/calendar/constants";
 import {
   buildExpandedMonthCells,
-  buildMonthCells,
   getFourMonthWindowStart,
   shiftMonthWindow,
 } from "@/lib/calendar/date-utils";
@@ -32,7 +31,7 @@ export default function Home() {
         year: date.getFullYear(),
         month: date.getMonth(),
         name: MONTH_NAMES[date.getMonth()],
-        cells: buildMonthCells(date.getFullYear(), date.getMonth()),
+        cells: buildExpandedMonthCells(date.getFullYear(), date.getMonth()),
       };
     });
   }, [windowStart]);

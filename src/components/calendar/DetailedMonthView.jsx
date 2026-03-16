@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import { Circle, Star } from "lucide-react";
 
@@ -25,8 +25,12 @@ export default function DetailedMonthView({
   selectedDate,
   onSelectDate,
   onFocusMonth,
+  compact = false,
+  onOpenMonth,
+  enableDetailModal = true,
 }) {
   const [detailDate, setDetailDate] = useState(null);
+  const suppressOpenMonthUntilRef = useRef(0);
 
   const monthHeaderMyanmar = getMyanmarMonthYearRangeForWesternMonth(
     detailedMonth.year,
@@ -52,19 +56,49 @@ export default function DetailedMonthView({
         : "",
     [detailDate],
   );
+  const handleOpenMonth = (event) => {
+    if (!onOpenMonth) {
+      return;
+    }
+
+    if (Date.now() < suppressOpenMonthUntilRef.current) {
+      event.stopPropagation();
+      return;
+    }
+
+    onOpenMonth();
+  };
 
   return (
-    <article className="rounded-2xl border border-stone-200 bg-white p-4 shadow-[0_10px_30px_-20px_rgba(0,0,0,0.35)]">
+    <article
+      onClick={handleOpenMonth}
+      className={cn(
+        "rounded-2xl border border-stone-200 bg-white shadow-[0_10px_30px_-20px_rgba(0,0,0,0.35)]",
+        compact ? "p-3" : "p-4",
+        onOpenMonth &&
+          "cursor-pointer transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_-20px_rgba(0,0,0,0.4)]",
+      )}
+    >
       <div className="flex flex-wrap items-end justify-between gap-2 border-b border-stone-200 pb-3">
-        <h2 className="text-2xl font-bold tracking-tight text-stone-800">
+        <h2
+          className={cn(
+            "font-bold tracking-tight text-stone-800",
+            compact ? "text-xl" : "text-2xl",
+          )}
+        >
           {detailedMonth.name} {detailedMonth.year}
         </h2>
-        <p className="text-sm font-semibold text-[#8a4f1b]">
+        <p className={cn("font-semibold text-[#8a4f1b]", compact ? "text-xs" : "text-sm")}>
           {monthHeaderMyanmar.monthRangeMy} {monthHeaderMyanmar.yearRangeMy}
         </p>
       </div>
 
-      <div className="mt-3 grid grid-cols-7 gap-y-2 text-[11px] font-bold uppercase tracking-wide text-stone-500">
+      <div
+        className={cn(
+          "mt-3 grid grid-cols-7 gap-y-2 font-bold uppercase tracking-wide text-stone-500",
+          compact ? "text-[10px]" : "text-[11px]",
+        )}
+      >
         {WEEKDAY_LABELS.map((label, index) => (
           <span
             key={`month-weekday-${label}`}
@@ -106,15 +140,19 @@ export default function DetailedMonthView({
 
               <button
                 type="button"
-                onClick={() => {
-                  if (isSelected) {
+                onClick={(event) => {
+                  if (onOpenMonth) {
+                    event.stopPropagation();
+                  }
+
+                  if (isSelected && enableDetailModal) {
                     setDetailDate(cell.date);
                     return;
                   }
 
                   setDetailDate(null);
                   onSelectDate(cell.date);
-                  if (!cell.currentMonth) {
+                  if (!cell.currentMonth && onFocusMonth) {
                     onFocusMonth(
                       new Date(
                         cell.date.getFullYear(),
@@ -125,7 +163,9 @@ export default function DetailedMonthView({
                   }
                 }}
                 className={cn(
-                  "relative min-h-[118px] w-full rounded-md border p-2 text-left transition sm:p-3",
+                  "relative w-full rounded-md border p-2 text-left transition sm:p-3",
+                  compact && "p-1.5 sm:p-2",
+                  compact ? "min-h-[84px]" : "min-h-[118px]",
                   holiday && "border-rose-300 bg-rose-50/60",
                   !holiday && "border-stone-200 bg-white",
                   !cell.currentMonth && "bg-stone-100/80",
@@ -136,7 +176,8 @@ export default function DetailedMonthView({
               >
                 <span
                   className={cn(
-                    "absolute left-3 top-3 text-sm font-bold",
+                    "absolute font-bold",
+                    compact ? "left-2 top-2 text-xs" : "left-3 top-3 text-sm",
                     isWeekend && cell.currentMonth && "text-red-600",
                     isWeekend && !cell.currentMonth && "text-red-400",
                     !isWeekend && cell.currentMonth && "text-stone-600",
@@ -146,18 +187,24 @@ export default function DetailedMonthView({
                   {myanmarDate.dayNumberMy}
                 </span>
 
-                <div className="absolute right-2 top-2 flex items-center gap-1">
+                <div className={cn("absolute flex items-center gap-1", compact ? "right-1.5 top-1.5" : "right-2 top-2")}>
                   {holiday && (
-                    <Star className="h-3.5 w-3.5 fill-rose-500 text-rose-500" />
+                    <Star
+                      className={cn(
+                        "fill-rose-500 text-rose-500",
+                        compact ? "h-3 w-3" : "h-3.5 w-3.5",
+                      )}
+                    />
                   )}
                   {shouldShowEmphasis && (
-                    <Circle className={cn("h-6 w-6", moonIconClass)} />
+                    <Circle className={cn(compact ? "h-5 w-5" : "h-6 w-6", moonIconClass)} />
                   )}
                 </div>
 
                 <span
                   className={cn(
-                    "absolute right-2 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full text-xl font-bold leading-none",
+                    "absolute top-1/2 grid -translate-y-1/2 place-items-center rounded-full font-bold leading-none",
+                    compact ? "right-1.5 h-7 w-7 text-lg" : "right-2 h-8 w-8 text-xl",
                     isSelected && "bg-[#b7702a] text-white",
                     !isSelected &&
                       isToday &&
@@ -180,17 +227,25 @@ export default function DetailedMonthView({
 
                 <div
                   className={cn(
-                    "mt-12 space-y-0.5",
+                    "space-y-0.5",
+                    compact ? "mt-9" : "mt-12",
                     !cell.currentMonth && "opacity-60",
                   )}
                 >
-                  <p className="text-[10px] font-semibold leading-tight text-stone-500">
+                  <p
+                    className={cn(
+                      "font-semibold leading-tight text-stone-500",
+                      compact ? "text-[9px]" : "text-[10px]",
+                    )}
+                  >
                     {myanmarDate.monthMy} {myanmarDate.dayPhaseMy}
                   </p>
                   <p
                     title={holiday?.title}
                     className={cn(
-                      "h-3  text-[10px] font-bold",
+                      compact
+                        ? "h-3 truncate text-[9px] font-bold"
+                        : "h-3 text-[10px] font-bold",
                       holiday ? "text-rose-600" : "text-transparent",
                     )}
                   >
@@ -204,10 +259,11 @@ export default function DetailedMonthView({
       </div>
 
       <Dialog
-        open={Boolean(detailDate && detailMyanmarDate)}
+        open={Boolean(enableDetailModal && detailDate && detailMyanmarDate)}
         onOpenChange={(open) => {
           if (!open) {
             setDetailDate(null);
+            suppressOpenMonthUntilRef.current = Date.now() + 280;
           }
         }}
       >

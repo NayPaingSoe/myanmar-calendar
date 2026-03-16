@@ -15,21 +15,6 @@ export const MONTH_NAMES = [
 
 export const WEEKDAY_LABELS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-export const MYANMAR_MONTH_NAMES = [
-  "Pyatho",
-  "Tabodwe",
-  "Tabaung",
-  "Tagu",
-  "Kason",
-  "Nayon",
-  "Waso",
-  "Wagaung",
-  "Tawthalin",
-  "Thadingyut",
-  "Tazaungmon",
-  "Nadaw",
-];
-
 export const HOLIDAY_TEMPLATES = [
   { month: 0, day: 4, title: "Independence Day" },
   { month: 1, day: 12, title: "Union Day" },

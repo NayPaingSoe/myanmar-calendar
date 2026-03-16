@@ -1,4 +1,5 @@
 import { HOLIDAY_TEMPLATES } from "@/components/calendar/constants";
+import { Mycal } from "mycal";
 
 export function buildMonthCells(year, month) {
   const firstWeekday = new Date(year, month, 1).getDay();
@@ -68,35 +69,14 @@ export function getHolidayForDate(date) {
   );
 }
 
-export function getMoonPhaseText(date) {
-  const daysSinceEpoch = Math.floor(date.getTime() / 86400000);
-  const cycleDay = ((daysSinceEpoch + 18) % 30) + 1;
+export function getMyanmarDateData(date) {
+  const myanmarDate = new Mycal(date);
 
-  if (cycleDay === 15) {
-    return "Full Moon";
-  }
-
-  if (cycleDay === 30) {
-    return "New Moon";
-  }
-
-  if (cycleDay < 15) {
-    return `Waxing ${cycleDay}`;
-  }
-
-  return `Waning ${cycleDay - 15}`;
-}
-
-export function getAstrologyTag(date) {
-  const value = (date.getDate() + date.getMonth()) % 7;
-
-  if (value === 0 || value === 3) {
-    return "Yatyaza";
-  }
-
-  if (value === 5) {
-    return "Pyathada";
-  }
-
-  return null;
+  return {
+    yearMy: myanmarDate.year.my,
+    monthMy: myanmarDate.month.my,
+    dayPhaseMy: myanmarDate.day.mp.my,
+    dayPhaseEn: myanmarDate.day.mp.en,
+    dayNumberMy: myanmarDate.day.fd.my,
+  };
 }

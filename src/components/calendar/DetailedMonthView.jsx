@@ -1,12 +1,7 @@
 import { Star } from "lucide-react";
 
-import { MYANMAR_MONTH_NAMES, WEEKDAY_LABELS } from "@/components/calendar/constants";
-import {
-  getAstrologyTag,
-  getHolidayForDate,
-  getMoonPhaseText,
-  isSameDate,
-} from "@/components/calendar/date-utils";
+import { WEEKDAY_LABELS } from "@/components/calendar/constants";
+import { getHolidayForDate, getMyanmarDateData, isSameDate } from "@/components/calendar/date-utils";
 import { cn } from "@/lib/utils";
 
 export default function DetailedMonthView({
@@ -16,12 +11,17 @@ export default function DetailedMonthView({
   onSelectDate,
   onFocusMonth,
 }) {
+  const monthHeaderMyanmar = getMyanmarDateData(new Date(detailedMonth.year, detailedMonth.month, 1));
+
   return (
     <article className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-[0_10px_30px_-20px_rgba(0,0,0,0.35)]">
       <div className="border-b border-stone-200 bg-stone-50 px-4 py-3">
         <h2 className="text-2xl font-bold tracking-tight text-stone-800">
           {detailedMonth.name} {detailedMonth.year}
         </h2>
+        <p className="mt-1 text-sm font-semibold text-[#8a4f1b]">
+          {monthHeaderMyanmar.monthMy} {monthHeaderMyanmar.yearMy}
+        </p>
       </div>
 
       <div className="grid grid-cols-7 border-b border-stone-200 bg-stone-100">
@@ -44,9 +44,9 @@ export default function DetailedMonthView({
           const isToday = isSameDate(cell.date, today);
           const isSelected = isSameDate(cell.date, selectedDate);
           const holiday = getHolidayForDate(cell.date);
-          const moonPhase = getMoonPhaseText(cell.date);
-          const astroTag = getAstrologyTag(cell.date);
-          const shouldShowEmphasis = moonPhase === "Full Moon" || moonPhase === "New Moon";
+          const myanmarDate = getMyanmarDateData(cell.date);
+          const shouldShowEmphasis =
+            myanmarDate.dayPhaseEn === "Full Moon" || myanmarDate.dayPhaseEn === "New Moon";
 
           return (
             <button
@@ -91,7 +91,7 @@ export default function DetailedMonthView({
 
               <div className={cn("mt-2 space-y-0.5", !cell.currentMonth && "opacity-60")}>
                 <p className="text-[11px] font-semibold text-stone-500">
-                  {MYANMAR_MONTH_NAMES[cell.date.getMonth()]}
+                  {myanmarDate.monthMy} {myanmarDate.yearMy}
                 </p>
                 <p
                   className={cn(
@@ -99,9 +99,8 @@ export default function DetailedMonthView({
                     shouldShowEmphasis ? "text-[#7b4516]" : "text-stone-700",
                   )}
                 >
-                  {moonPhase}
+                  {myanmarDate.dayPhaseMy} {myanmarDate.dayNumberMy}
                 </p>
-                {astroTag && <p className="text-[11px] font-semibold text-emerald-700">{astroTag}</p>}
                 {holiday && <p className="text-[11px] font-bold text-rose-600">{holiday.title}</p>}
               </div>
             </button>

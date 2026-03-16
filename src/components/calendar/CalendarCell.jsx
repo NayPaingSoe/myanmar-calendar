@@ -115,7 +115,8 @@ export default function CalendarCell({
               : "right-2 top-1/2 h-10 w-10 text-2xl",
             isSelected && "bg-[#0f766e] text-white",
             !isSelected && isToday && "border border-[#0f766e] text-[#0f766e]",
-            !isSelected && !isToday && isWeekend && "text-red-600",
+            !isSelected && !isToday && isWeekend && cell.currentMonth && "text-red-600",
+            !isSelected && !isToday && isWeekend && !cell.currentMonth && "text-red-400",
             !isSelected &&
               !isToday &&
               !isWeekend &&

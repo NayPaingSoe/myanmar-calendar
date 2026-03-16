@@ -56,7 +56,9 @@ export default function CalendarCell({
           onClearDetail();
           onSelectDate(cell.date);
           if (!cell.currentMonth && onFocusMonth) {
-            onFocusMonth(new Date(cell.date.getFullYear(), cell.date.getMonth(), 1));
+            onFocusMonth(
+              new Date(cell.date.getFullYear(), cell.date.getMonth(), 1),
+            );
           }
         }}
         className={cn(
@@ -99,7 +101,9 @@ export default function CalendarCell({
             />
           )}
           {shouldShowEmphasis && (
-            <Circle className={cn(compact ? "h-5 w-5" : "h-6 w-6", moonIconClass)} />
+            <Circle
+              className={cn(compact ? "h-5 w-5" : "h-6 w-6", moonIconClass)}
+            />
           )}
         </div>
 
@@ -136,7 +140,7 @@ export default function CalendarCell({
         >
           <p
             className={cn(
-              "font-myanmar font-semibold leading-tight text-stone-500",
+              "font-myanmar font-semibold leading-tight text-stone-700",
               compact ? "text-[9px]" : "text-[10px]",
             )}
           >
@@ -146,7 +150,9 @@ export default function CalendarCell({
             title={holiday?.title}
             className={cn(
               "font-myanmar",
-              compact ? "h-3 truncate text-[9px] font-bold" : "h-3 text-[10px] font-bold",
+              compact
+                ? "h-3 truncate text-[9px] font-bold"
+                : "h-3 text-[10px] font-bold",
               holiday ? "text-rose-600" : "text-transparent",
             )}
           >

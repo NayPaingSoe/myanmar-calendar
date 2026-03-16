@@ -14,18 +14,3 @@ export const MONTH_NAMES = [
 ];
 
 export const WEEKDAY_LABELS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-
-export const HOLIDAY_TEMPLATES = [
-  { month: 0, day: 4, title: "Independence Day" },
-  { month: 1, day: 12, title: "Union Day" },
-  { month: 2, day: 2, title: "Peasants' Day" },
-  { month: 2, day: 27, title: "Armed Forces Day" },
-  { month: 3, day: 13, title: "Thingyan Akyo Day" },
-  { month: 3, day: 14, title: "Thingyan Akyat Day" },
-  { month: 3, day: 15, title: "Thingyan Akyat Day" },
-  { month: 3, day: 16, title: "Thingyan Atat Day" },
-  { month: 3, day: 17, title: "Myanmar New Year Day" },
-  { month: 4, day: 1, title: "Labour Day" },
-  { month: 6, day: 19, title: "Martyrs' Day" },
-  { month: 11, day: 25, title: "Christmas Day" },
-];

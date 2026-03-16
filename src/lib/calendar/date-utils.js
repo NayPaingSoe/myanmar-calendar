@@ -1,5 +1,60 @@
-import { HOLIDAY_TEMPLATES } from "@/lib/calendar/constants";
-import { Mycal } from "mycal";
+import { ceDateTime, ceMmDateTime, ceMmTranslate } from "@/lib/calendar/mmcal/ceMmDateTime";
+
+const MM_TRANSLATOR = new ceMmTranslate();
+const MYANMAR_LANGUAGE = 1;
+const ENGLISH_LANGUAGE = 0;
+
+const MYANMAR_MONTHS_EN = [
+  "First Waso",
+  "Tagu",
+  "Kason",
+  "Nayon",
+  "Waso",
+  "Wagaung",
+  "Tawthalin",
+  "Thadingyut",
+  "Tazaungmon",
+  "Nadaw",
+  "Pyatho",
+  "Tabodwe",
+  "Tabaung",
+  "Late Tagu",
+  "Late Kason",
+];
+
+const MOON_PHASES_EN = ["Waxing", "Full Moon", "Waning", "New Moon"];
+
+function translateToMyanmar(value) {
+  if (value == null || value === "") {
+    return "";
+  }
+
+  return MM_TRANSLATOR.T(String(value), MYANMAR_LANGUAGE, ENGLISH_LANGUAGE);
+}
+
+function getMyanmarMonthNameEn(mmDate) {
+  const monthName = MYANMAR_MONTHS_EN[mmDate.mm] ?? "";
+
+  if (mmDate.mm === 4 && mmDate.myt > 0) {
+    return `Second ${monthName}`;
+  }
+
+  return monthName;
+}
+
+function getMmDateTimeForWesternDate(date) {
+  const jd = ceDateTime.w2j(
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+    12,
+    0,
+    0,
+    1,
+  );
+
+  return new ceMmDateTime(jd, 0, 1);
+}
 
 export function buildMonthCells(year, month) {
   const firstWeekday = new Date(year, month, 1).getDay();
@@ -64,20 +119,29 @@ export function isSameDate(a, b) {
 }
 
 export function getHolidayForDate(date) {
-  return HOLIDAY_TEMPLATES.find(
-    (holiday) => holiday.month === date.getMonth() && holiday.day === date.getDate(),
-  );
+  const mmDate = getMmDateTimeForWesternDate(date);
+  const publicHolidays = mmDate.holidays;
+
+  if (!publicHolidays.length) {
+    return null;
+  }
+
+  return {
+    title: publicHolidays.map((holiday) => translateToMyanmar(holiday)).join("၊ "),
+    titleEn: publicHolidays.join(", "),
+  };
 }
 
 export function getMyanmarDateData(date) {
-  const myanmarDate = new Mycal(date);
+  const mmDate = getMmDateTimeForWesternDate(date);
+  const dayPhaseEn = MOON_PHASES_EN[mmDate.mp] ?? "";
 
   return {
-    yearMy: myanmarDate.year.my,
-    monthMy: myanmarDate.month.my,
-    dayPhaseMy: myanmarDate.day.mp.my,
-    dayPhaseEn: myanmarDate.day.mp.en,
-    dayNumberMy: myanmarDate.day.fd.my,
+    yearMy: translateToMyanmar(mmDate.my),
+    monthMy: translateToMyanmar(getMyanmarMonthNameEn(mmDate)),
+    dayPhaseMy: translateToMyanmar(dayPhaseEn),
+    dayPhaseEn,
+    dayNumberMy: translateToMyanmar(mmDate.mf),
   };
 }
 
@@ -87,9 +151,9 @@ export function getMyanmarMonthYearRangeForWesternMonth(year, month) {
   const yearNames = [];
 
   for (let day = 1; day <= daysInMonth; day += 1) {
-    const myanmarDate = new Mycal(new Date(year, month, day));
-    const currentMonthName = myanmarDate.month.my;
-    const currentYearName = myanmarDate.year.my;
+    const mmDate = getMmDateTimeForWesternDate(new Date(year, month, day));
+    const currentMonthName = translateToMyanmar(getMyanmarMonthNameEn(mmDate));
+    const currentYearName = translateToMyanmar(mmDate.my);
 
     if (monthNames[monthNames.length - 1] !== currentMonthName) {
       monthNames.push(currentMonthName);

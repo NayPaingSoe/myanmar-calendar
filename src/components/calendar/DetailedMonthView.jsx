@@ -99,7 +99,10 @@ export default function DetailedMonthView({
                 <span
                   className={cn(
                     "absolute left-3 top-3 text-sm font-bold",
-                    cell.currentMonth ? "text-stone-600" : "text-stone-400",
+                    isWeekend && cell.currentMonth && "text-red-600",
+                    isWeekend && !cell.currentMonth && "text-red-400",
+                    !isWeekend && cell.currentMonth && "text-stone-600",
+                    !isWeekend && !cell.currentMonth && "text-stone-400",
                   )}
                 >
                   {myanmarDate.dayNumberMy}
@@ -139,25 +142,22 @@ export default function DetailedMonthView({
 
                 <div
                   className={cn(
-                    "mt-14 max-w-[calc(100%-2.5rem)] space-y-0.5",
+                    "mt-12 space-y-0.5",
                     !cell.currentMonth && "opacity-60",
                   )}
                 >
-                  <p className="truncate text-[10px] font-semibold text-stone-500">
-                    {myanmarDate.monthMy}
-                    {myanmarDate.dayPhaseMy}
+                  <p className="text-[10px] font-semibold leading-tight text-stone-500">
+                    {myanmarDate.monthMy} {myanmarDate.dayPhaseMy}
                   </p>
                   <p
+                    title={holiday?.title}
                     className={cn(
-                      "truncate text-[11px] font-bold",
-                      shouldShowEmphasis ? "text-[#7b4516]" : "text-stone-700",
+                      "h-3  text-[10px] font-bold",
+                      holiday ? "text-rose-600" : "text-transparent",
                     )}
-                  ></p>
-                  {holiday && (
-                    <p className="truncate text-[10px] font-bold text-rose-600">
-                      {holiday.title}
-                    </p>
-                  )}
+                  >
+                    {holiday?.title ?? ""}
+                  </p>
                 </div>
               </button>
             </div>

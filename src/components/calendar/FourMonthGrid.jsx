@@ -90,7 +90,10 @@ export default function FourMonthGrid({
                       {myanmarDate.monthMy}
                     </p>
                     <p className="truncate text-[10px] font-semibold text-stone-700">
-                      {myanmarDate.dayPhaseMy} {myanmarDate.dayNumberMy}
+                      {myanmarDate.dayPhaseMy}{" "}
+                      <span className={cn(isWeekend && "text-red-600")}>
+                        {myanmarDate.dayNumberMy}
+                      </span>
                     </p>
                   </button>
                 </div>

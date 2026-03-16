@@ -13,6 +13,8 @@ import {
   shiftMonthWindow,
 } from "@/lib/calendar/date-utils";
 
+const YEAR_OPTION_RANGE = 20;
+
 export default function Home() {
   const today = useMemo(() => new Date(), []);
 
@@ -51,7 +53,11 @@ export default function Home() {
   const yearOptions = useMemo(() => {
     const centerYear =
       viewMode === "month" ? focusedMonth.getFullYear() : windowStart.getFullYear();
-    return Array.from({ length: 11 }, (_, idx) => centerYear - 5 + idx);
+
+    return Array.from(
+      { length: YEAR_OPTION_RANGE * 2 + 1 },
+      (_, idx) => centerYear - YEAR_OPTION_RANGE + idx,
+    );
   }, [focusedMonth, viewMode, windowStart]);
 
   const jumpToToday = () => {

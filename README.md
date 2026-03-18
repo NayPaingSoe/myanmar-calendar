@@ -1,87 +1,107 @@
-# Myanmar Calendar - မြန်မာပြက္ခဒိန် (Next.js)
+# Myanmar Calendar - မြန်မာပြက္ခဒိန်
 
-A Myanmar-focused calendar app built with Next.js App Router, Tailwind CSS, and shadcn/base-ui primitives.
+A responsive Myanmar calendar built with Next.js App Router. The app shows Western and Myanmar calendar data side by side, highlights Myanmar public holidays, and lets users move between a compact four-month overview and a focused month view.
 
 ## Demo
 
-- Live URL: https://myanmar-calendar-two.vercel.app
+Live app: https://myanmar-calendar-two.vercel.app
 
-## Features
+## Highlights
 
-- 4-month grid view (calendar cards)
-- Single month detailed view
-- Myanmar date data in each day cell
-- Myanmar public holiday indicator + hover tooltip
-- Date detail modal on selected day
+- Four-month dashboard for quick scanning across the year
+- Dedicated month view for deeper day-by-day browsing
+- Myanmar date labels rendered in every calendar cell
+- Myanmar month and year ranges shown in each month header
+- Public holiday markers with hover labels
+- Full moon and new moon visual emphasis
+- Date detail modal for the selected day
+- Client-side Myanmar date and holiday calculation using the bundled calendar algorithm
 
-## Project Architecture
+## Tech Stack
 
-```text
-src/
-  app/
-    layout.js                # App shell
-    page.js                  # Main state + view switching (Month / 4-Month)
-    globals.css              # Global styles and theme tokens
+- Next.js 16 with the App Router
+- React 19
+- Tailwind CSS v4
+- Base UI and shadcn-style primitives
+- `ceMmDateTime` Myanmar calendar algorithm utilities
 
-  components/
-    calendar/
-      HeaderBar.jsx          # Top header
-      CalendarToolbar.jsx    # Navigation + year + mode toggles
-      FourMonthGrid.jsx      # 4-month layout using compact month views
-      DetailedMonthView.jsx  # Month grid cells + selection + tooltip + modal trigger
-      DateDetailModal.jsx    # Selected date detail dialog
+## Getting Started
 
-    ui/
-      dialog.jsx             # Dialog primitives
-      button.jsx             # Button primitive
+### Prerequisites
 
-  lib/
-    calendar/
-      constants.js           # Month/week labels
-      date-utils.js          # Calendar cell builders + Myanmar conversion helpers
-      mmcal/ceMmDateTime.js  # Myanmar calendar algorithm source
+- Node.js 20 or newer
+- npm
 
-    utils.js                 # Shared utility helpers (cn)
-```
-
-## Run Locally
-
-1. Install dependencies:
+### Install
 
 ```bash
 npm install
 ```
 
-2. Start dev server:
+### Run in Development
 
 ```bash
 npm run dev
 ```
 
-3. Open:
+Open `http://localhost:3000`.
 
-```text
-http://localhost:3000
-```
-
-## Build and Start (Production)
+## Available Scripts
 
 ```bash
+npm run dev
 npm run build
 npm run start
+npm run lint
 ```
 
-## Lint
+## How the App Works
 
-```bash
-npm run lint
+- The top-level page in `src/app/page.js` manages the active view, the selected date, and month navigation.
+- The four-month layout reuses the same month component as the detailed view, which keeps rendering behavior consistent across both modes.
+- Myanmar date conversion and holiday lookup happen in `src/lib/calendar/date-utils.js`.
+- Calendar data is generated locally from the bundled `ceMmDateTime` implementation, so the UI does not depend on an external calendar API.
+- Clicking a day selects it. Clicking the selected day again opens the detail modal.
+
+## Project Structure
+
+```text
+src/
+  app/
+    layout.js
+    page.js
+    globals.css
+
+  components/
+    calendar/
+      HeaderBar.jsx
+      CalendarToolbar.jsx
+      FourMonthGrid.jsx
+      DetailedMonthView.jsx
+      CalendarCell.jsx
+      MonthHeader.jsx
+      DateDetailModal.jsx
+    ui/
+      button.jsx
+      dialog.jsx
+
+  hooks/
+    useDateDetailModal.js
+
+  lib/
+    calendar/
+      constants.js
+      date-utils.js
+      mmcal/ceMmDateTime.js
+    utils.js
 ```
 
 ## Notes
 
-- Myanmar date and holiday calculation is handled in `src/lib/calendar/date-utils.js` using `ceMmDateTime`.
-- `page.js` is the top-level container for calendar navigation state and view mode transitions.
+- Myanmar typography uses Google Fonts via `Noto Sans Myanmar`.
+- Holiday labels are displayed in Myanmar language in the UI.
+- Selecting a date from the previous or next month shifts focus to that month automatically.
 
 ## Credit
 
-- Reference: Yan Naing Aye (Cool Emerald) Algorithm.
+Myanmar calendar calculations are based on the algorithm by Yan Naing Aye (Cool Emerald).
